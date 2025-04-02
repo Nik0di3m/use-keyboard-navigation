@@ -24,7 +24,7 @@ const Component = () => {
     onKeyPress: (key) => { 
       if (!containerRef.current) return;
 
-      const scrollStep = 100; // Kroki scrollowania w pikselach
+      const scrollStep = 100;
       const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
 
       switch (key) {
