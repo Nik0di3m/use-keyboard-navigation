@@ -26,10 +26,10 @@ const Component = () => {
 };
 ```
 
-| Prop       | Type                                    | Default  | Description                 |
-| ---------- | --------------------------------------- | -------- | --------------------------- | ------------------------ |
-| keys       | string[]                                | Required | Array of keys to listen for |
-| onKeyPress | (key: string, index: number) =&gt; void | Required | Callback on key press       |
-| parentRef  | React.RefObject&lt;HTMLElement&gt;      | null     | null                        | Scope to parent element  |
-| enabled    | boolean                                 | true     | Enable/disable hook         |
-| eventType  | 'keydown'                               | 'keyup'  | 'keydown'                   | Event type to listen for |
+ Prop       | Type                                      | Default   | Description                 
+------------|-------------------------------------------|-----------|-----------------------------
+ keys       | string[]                                  | Required  | Array of keys to listen for 
+ onKeyPress | (key: string, index: number) =&gt; void   | Required  | Callback on key press       
+ parentRef  | React.RefObject&lt;HTMLElement&gt; | null | null      | Scope to parent element     
+ enabled    | boolean                                   | true      | Enable/disable hook         
+ eventType  | 'keydown' | 'keyup'                       | 'keydown' | Event type to listen for    
