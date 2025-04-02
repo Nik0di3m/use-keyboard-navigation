@@ -9,9 +9,9 @@ npm install use-keyboard-navigation
 ```
 
 
-## Example
+## Example1
 
-```typescript
+```javascript
 import { useKeyboardNavigation } from "use-keyboard-navigation";
 
 const Component = () => {
@@ -22,32 +22,32 @@ const Component = () => {
     keys: ['ArrowUp', 'ArrowDown', 'Home', 'End'], // Specify the keys you want to use for navigation
     // Callback function to be executed when the key is pressed
     onKeyPress: (key) => { 
-      if (!scrollContainerRef.current) return;
+      if (!containerRef.current) return;
 
       const scrollStep = 100; // Kroki scrollowania w pikselach
-      const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+      const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
 
       switch (key) {
         case 'ArrowDown':
-          scrollContainerRef.current.scrollBy({
+          containerRef.current.scrollBy({
             top: scrollStep,
             behavior: 'smooth',
           });
           break;
         case 'ArrowUp':
-          scrollContainerRef.current.scrollBy({
+          containerRef.current.scrollBy({
             top: -scrollStep,
             behavior: 'smooth',
           });
           break;
         case 'Home':
-          scrollContainerRef.current.scrollTo({
+          containerRef.current.scrollTo({
             top: 0,
             behavior: 'smooth',
           });
           break;
         case 'End':
-          scrollContainerRef.current.scrollTo({
+          containerRef.current.scrollTo({
             top: scrollHeight - clientHeight,
             behavior: 'smooth',
           });
@@ -58,9 +58,37 @@ const Component = () => {
 
   return <div ref={containerRef} tabIndex={0} />;
 };
+```
 
 
+## Example 2
 
+```javascript
+// WCAG/EAA 2.1 compatible keyboard navigation
+
+export default function Navigation() {
+  const linksRef = useRef([]);
+  useKeyboardNavigation({
+    keys: ['1', '2', '3', '4'],
+    onKeyPress: (_, index) => {
+      linksRef.current[index]?.focus();
+    },
+  });
+
+  return (
+    <nav>
+      <ul>
+        {Array.from({ length: 4 }, (_, i) => (
+          <li key={i} className='py-4 lg:ml-3'>
+            <Link href='/' tabIndex={0} aria-label='' ref={(el) => (linksRef.current[0] = el)}>
+              Menu link
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
 ```
 
  Prop       | Type                                      | Default   | Description                 
