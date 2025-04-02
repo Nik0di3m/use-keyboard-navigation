@@ -8,22 +8,59 @@ React hook for keyboard navigation with focus control. WCAG-compliant.
 npm install use-keyboard-navigation
 ```
 
+
+## Example
+
 ```typescript
 import { useKeyboardNavigation } from "use-keyboard-navigation";
 
 const Component = () => {
-  const containerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef(null);
 
   useKeyboardNavigation({
-    parentRef: containerRef,
-    keys: ["ArrowUp", "ArrowDown"],
-    onKeyPress: (key) => {
-      console.log(`Pressed ${key}`);
+    parentRef: containerRef, // Works only if parentRef is focused
+    keys: ['ArrowUp', 'ArrowDown', 'Home', 'End'], // Specify the keys you want to use for navigation
+    // Callback function to be executed when the key is pressed
+    onKeyPress: (key) => { 
+      if (!scrollContainerRef.current) return;
+
+      const scrollStep = 100; // Kroki scrollowania w pikselach
+      const { scrollTop, scrollHeight, clientHeight } = scrollContainerRef.current;
+
+      switch (key) {
+        case 'ArrowDown':
+          scrollContainerRef.current.scrollBy({
+            top: scrollStep,
+            behavior: 'smooth',
+          });
+          break;
+        case 'ArrowUp':
+          scrollContainerRef.current.scrollBy({
+            top: -scrollStep,
+            behavior: 'smooth',
+          });
+          break;
+        case 'Home':
+          scrollContainerRef.current.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+          });
+          break;
+        case 'End':
+          scrollContainerRef.current.scrollTo({
+            top: scrollHeight - clientHeight,
+            behavior: 'smooth',
+          });
+          break;
+      }
     },
   });
 
   return <div ref={containerRef} tabIndex={0} />;
 };
+
+
+
 ```
 
  Prop       | Type                                      | Default   | Description                 
